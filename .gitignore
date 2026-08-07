@@ -144,13 +144,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Local grade / run outputs
-outputs/grade_report.json
-outputs/results.json
-outputs/attack_results.json
-outputs/audit_log.json
-outputs/metrics.json
-
 # Spyder project settings
 .spyderproject
 .spyproject

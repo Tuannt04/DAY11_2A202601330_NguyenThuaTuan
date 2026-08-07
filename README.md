@@ -1,5 +1,7 @@
 # Day 11 — Controlled Agent Security (2026)
 
+**Họ tên:** Nguyễn Thừa Tuân · **MSSV:** 2A202601330
+
 Làm sao để ứng dụng agent an toàn hơn?
 
 **Hình thức:** bài tập **cá nhân** (1 người / 1 MSSV).
@@ -18,11 +20,14 @@ python -m venv .venv
 # 2) API key
 Copy-Item .env.example .env
 # Mở .env, dán GOOGLE_API_KEY — lấy tại https://aistudio.google.com/apikey
+# và OPENAI_API_KEY — lấy tại https://platform.openai.com/api-keys
 
 # 3) Cài dependency trong venv
 python -m pip install -U pip
 pip install -r requirements.txt
 ```
+
+> **Lưu ý model:** `src/agents/agent.py`, `output_guardrails.py`, `nemo_guardrails.py`, `attacks.py` được route qua OpenAI `gpt-4o-mini` (qua `google.adk.models.lite_llm.LiteLlm`) vì Gemini free-tier trả `429 RESOURCE_EXHAUSTED` liên tục trong ngày làm bài (chi tiết + lý do trong `report/2A202601330_report.md`) — cần cả `GOOGLE_API_KEY` (giá trị bất kỳ, không còn gọi thật) lẫn `OPENAI_API_KEY` (giá trị thật) mới chạy được. Riêng `src/agents/guards_agent.py` (mục tiêu bonus, file tham khảo) **vẫn giữ nguyên Gemini** như bản gốc.
 
 Mỗi lần mở terminal mới: `.\.venv\Scripts\Activate.ps1` rồi mới chạy code.
 
@@ -32,7 +37,8 @@ Nếu PowerShell báo không cho chạy script:
 PowerShell (nếu chưa load `.env`):
 
 ```powershell
-$env:GOOGLE_API_KEY="dán-key-của-bạn"
+$env:GOOGLE_API_KEY="dummy-hoặc-key-thật"
+$env:OPENAI_API_KEY="key-openai-thật"
 ```
 
 ---

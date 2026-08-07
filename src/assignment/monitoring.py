@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 @dataclass
@@ -35,12 +36,61 @@ class MonitoringAlert:
     judge_fails: int = 0
 
     def check_metrics(self) -> list[Alert]:
-        """TODO: compute rates, append Alert objects when thresholds exceeded."""
-        raise NotImplementedError("Implement MonitoringAlert.check_metrics")
+        """Compute rates, append Alert objects when thresholds are exceeded."""
+        self.alerts = []
+
+        if self.total_requests:
+            block_rate = self.blocked_requests / self.total_requests
+            if block_rate > self.block_rate_threshold:
+                self.alerts.append(
+                    Alert(
+                        metric="block_rate",
+                        value=block_rate,
+                        threshold=self.block_rate_threshold,
+                        message=(
+                            f"Block rate {block_rate:.0%} exceeds threshold "
+                            f"{self.block_rate_threshold:.0%} — check for over-blocking "
+                            "or an active attack wave."
+                        ),
+                    )
+                )
+
+        if self.rate_limit_hits > self.rate_limit_hit_threshold:
+            self.alerts.append(
+                Alert(
+                    metric="rate_limit_hits",
+                    value=self.rate_limit_hits,
+                    threshold=self.rate_limit_hit_threshold,
+                    message=(
+                        f"{self.rate_limit_hits} rate-limit hits exceed threshold "
+                        f"{self.rate_limit_hit_threshold} — possible flooding/cost attack."
+                    ),
+                )
+            )
+
+        if self.judge_checks:
+            judge_fail_rate = self.judge_fails / self.judge_checks
+            if judge_fail_rate > self.judge_fail_rate_threshold:
+                self.alerts.append(
+                    Alert(
+                        metric="judge_fail_rate",
+                        value=judge_fail_rate,
+                        threshold=self.judge_fail_rate_threshold,
+                        message=(
+                            f"Judge fail rate {judge_fail_rate:.0%} exceeds threshold "
+                            f"{self.judge_fail_rate_threshold:.0%} — review recent responses."
+                        ),
+                    )
+                )
+
+        return self.alerts
 
     def export_json(self, filepath: str = "outputs/metrics.json"):
-        """TODO: write metrics + alerts to JSON."""
-        raise NotImplementedError("Implement MonitoringAlert.export_json")
+        """Write metrics + alerts to JSON."""
+        self.check_metrics()
+        path = Path(filepath)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(self.snapshot(), indent=2), encoding="utf-8")
 
     def snapshot(self) -> dict:
         block_rate = (

@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-08-07T10:54:59.605593+00:00",
+  "submission_dir": "D:\\Workspace\\VinAI_LAB\\LAB11\\DAY11_2A202601330_NguyenThuaTuan",
+  "technical_failure": false,
+  "packaging": {
+    "ok": true,
+    "details": {
+      "report": [
+        "2A202601330_report.md"
+      ],
+      "audit": true,
+      "metrics": true,
+      "results": true,
+      "attack_results": true
+    }
+  },
+  "results_schema": {
+    "ok": true,
+    "error": null,
+    "points": 10,
+    "student_id": "2A202601330"
+  },
+  "public_tests": {
+    "returncode": 0,
+    "stdout": "..................                                                       [100%]\n18 passed in 6.28s\n",
+    "stderr": "",
+    "technical_failure": false
+  },
+  "human_review_required": [
+    "report_layer_analysis",
+    "report_false_positives",
+    "report_gap_analysis",
+    "report_production_readiness",
+    "report_ethics",
+    "attack_success_bonus"
+  ],
+  "notes": "Checks packaging + schema + public tests. Defense 80% / Attack 20%. Bonus +2 per successful leak on Guards Agent only (max +10). Reports human-reviewed."
+}
