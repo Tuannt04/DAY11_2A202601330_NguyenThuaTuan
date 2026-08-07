@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T10:54:59.605593+00:00",
+  "generated_at": "2026-08-07T14:29:32.530690+00:00",
   "submission_dir": "D:\\Workspace\\VinAI_LAB\\LAB11\\DAY11_2A202601330_NguyenThuaTuan",
   "technical_failure": false,
   "packaging": {
@@ -22,7 +22,7 @@
   },
   "public_tests": {
     "returncode": 0,
-    "stdout": "..................                                                       [100%]\n18 passed in 6.28s\n",
+    "stdout": "..................                                                       [100%]\n18 passed in 3.74s\n",
     "stderr": "",
     "technical_failure": false
   },
